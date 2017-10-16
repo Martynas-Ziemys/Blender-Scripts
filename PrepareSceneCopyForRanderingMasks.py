@@ -1,13 +1,13 @@
-# This is intended to use for preparing a scene copy for rendering masks.
-# A full copy of the scene should be made. The script sets it up to 
-# render masks in red green and blue channels of an image with cycles. 
-# All scene's materials are changed to 'Masks.Black' material, then 
+# This is intended for preparing a scene copy for rendering masks.
+# A full copy of the scene is made. The script sets it up to 
+# render masks in red green and blue channels of an image with Cycles. 
+# All the new scene's materials are changed to 'Masks.Black' material, then 
 # materials 'Masks.Red', 'Masks.Green' and 'Masks.Blue' should be 
-# assigned to desired objects. 
+# manually assigned to desired objects. 
 ###############################################################################
 
 import bpy
-
+bpy.ops.scene.new(type='FULL_COPY')
 sc = bpy.context.scene
 sc.name = "Masks"
 sc.cycles.transparent_max_bounces = 0
@@ -24,6 +24,8 @@ sc.cycles.caustics_refractive = False
 sc.cycles.samples = 64
 sc.view_settings.view_transform = 'Default'
 sc.view_settings.look = 'None'
+sc.view_settings.exposure = 0
+sc.view_settings.gamma = 1
 sc.render.layers["MainLayer"].use_sky = False
 sc.render.layers["MainLayer"].use_ao = False
 sc.render.image_settings.file_format = 'PNG'
