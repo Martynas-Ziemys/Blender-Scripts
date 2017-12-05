@@ -22,7 +22,10 @@ sc.cycles.use_transparent_shadows = False
 sc.cycles.caustics_reflective = False
 sc.cycles.caustics_refractive = False
 sc.cycles.samples = 64
-sc.view_settings.view_transform = 'Default'
+if sc.view_settings.view_transform.find('Default')==0:
+    sc.view_settings.view_transform = 'Default'
+elif sc.view_settings.view_transform.find('sRGB/BT.709')==0:
+    sc.view_settings.view_transform = 'sRGB/BT.709'
 sc.view_settings.look = 'None'
 sc.view_settings.exposure = 0
 sc.view_settings.gamma = 1
@@ -63,7 +66,9 @@ for name, color_rgba in mask_materials:
 
 for objects in bpy.context.scene.objects:
     for slots in objects.material_slots: 
-        if slots.material != None:
-            name = slots.material.name
+        if len(objects.material_slots)>0:
             slots.link = 'OBJECT'
             slots.material = bpy.data.materials.get('Masks.Black')
+    if len(objects.material_slots)==0:
+        if hasattr(objects.data, 'materials'):
+            objects.data.materials.append(bpy.data.materials.get('Masks.Black'))
