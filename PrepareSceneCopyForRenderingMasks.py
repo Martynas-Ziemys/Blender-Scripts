@@ -26,13 +26,13 @@ sc.view_settings.view_transform = 'Default'
 sc.view_settings.look = 'None'
 sc.view_settings.exposure = 0
 sc.view_settings.gamma = 1
-sc.render.layers["MainLayer"].use_sky = False
-sc.render.layers["MainLayer"].use_ao = False
+sc.render.layers.active.use_sky = False
+sc.render.layers.active.use_ao = False
 sc.render.image_settings.file_format = 'PNG'
 sc.render.image_settings.color_mode = 'RGB'
 sc.render.image_settings.color_depth = '16'
 
-def creataMaskMat(mat_name, color_rgba):
+def createMaskMat(mat_name, color_rgba):
     mat = (bpy.data.materials.get(mat_name) or 
            bpy.data.materials.new(mat_name))
     mat.use_nodes = True
@@ -58,7 +58,7 @@ mask_materials = (
         )
         
 for name, color_rgba in mask_materials:
-    creataMaskMat(name, color_rgba)
+    createMaskMat(name, color_rgba)
 
 
 for objects in bpy.context.scene.objects:
