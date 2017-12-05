@@ -24,8 +24,8 @@ sc.cycles.caustics_refractive = False
 sc.cycles.samples = 64
 if sc.view_settings.view_transform.find('Default')==0:
     sc.view_settings.view_transform = 'Default'
-elif sc.view_settings.view_transform.find('sRGB/BT.709')==0:
-    sc.view_settings.view_transform = 'sRGB/BT.709'
+elif sc.view_settings.view_transform.find('sRGB EOTF')==0:
+    sc.view_settings.view_transform = 'sRGB EOTF'
 sc.view_settings.look = 'None'
 sc.view_settings.exposure = 0
 sc.view_settings.gamma = 1
