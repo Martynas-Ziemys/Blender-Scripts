@@ -7,9 +7,10 @@
 ###############################################################################
 
 import bpy
-bpy.ops.scene.new(type='FULL_COPY')
+if 'Masks' not in bpy.data.scenes:
+    bpy.ops.scene.new(type='FULL_COPY')
+    bpy.context.scene.name = "Masks"   
 sc = bpy.context.scene
-sc.name = "Masks"
 sc.cycles.transparent_max_bounces = 0
 sc.cycles.transparent_min_bounces = 0
 sc.cycles.max_bounces = 0
@@ -65,7 +66,8 @@ mask_materials = (
         )
         
 for name, color_rgba in mask_materials:
-    createMaskMat(name, color_rgba)
+    if name not in bpy.data.materials:
+        createMaskMat(name, color_rgba)
 
 
 for objects in bpy.context.scene.objects:
