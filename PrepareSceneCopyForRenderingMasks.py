@@ -22,7 +22,14 @@ sc.cycles.use_transparent_shadows = False
 sc.cycles.caustics_reflective = False
 sc.cycles.caustics_refractive = False
 sc.cycles.samples = 64
-#sc.view_settings.view_transform='Default') - need to check if 'Default' exists if Filmic installed manually.
+try:
+    sc.view_settings.view_transform = 'Default'
+except:
+    try:
+        sc.view_settings.view_transform = 'sRGB EOTF'
+    except:
+        print('Could not set color management to sRGB')
+
 sc.view_settings.look = 'None'
 sc.view_settings.exposure = 0
 sc.view_settings.gamma = 1
