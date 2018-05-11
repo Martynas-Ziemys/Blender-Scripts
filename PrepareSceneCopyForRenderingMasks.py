@@ -7,8 +7,16 @@
 ###############################################################################
 
 import bpy
+
+for every_object in bpy.context.scene.objects:
+    for every_slot in every_object.material_slots:
+        if every_slot.link !='OBJECT':
+            material = bpy.data.materials.get(every_slot.name)
+            every_slot.link = 'OBJECT'
+            every_slot.material = material
+        
 if 'Masks' not in bpy.data.scenes:
-    bpy.ops.scene.new(type='FULL_COPY')
+    bpy.ops.scene.new(type='LINK_OBJECT_DATA')
     bpy.context.scene.name = "Masks"   
 sc = bpy.context.scene
 sc.cycles.transparent_max_bounces = 0
