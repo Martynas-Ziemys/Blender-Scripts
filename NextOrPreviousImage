@@ -1,0 +1,73 @@
+bl_info = {
+    "name": "Next Or Previous Image",
+    "author": "Martynas Žiemys",
+    "version": "1",
+    "blender": (2, 78, 0),
+    "location": "Image Editor, keys [ and ]",
+    "description": "Show next or previous image in Image Editor with [ and ] keys",
+    "category": "Image Editor"
+    }
+    
+import bpy
+
+class NextImage(bpy.types.Operator):
+    """Next or previous image"""
+    bl_idname = "image.next"
+    bl_label = "Next Or Previous Image"
+    bl_options = {'REGISTER', 'UNDO'}
+    previous = bpy.props.BoolProperty(
+                name = 'Previous',
+                description = 'Previous image instead of next',
+                default = False
+            )
+
+    @classmethod
+    def poll(cls, context):
+        return True
+
+    def execute(self, context):
+        try:
+            number = bpy.data.images.find(bpy.context.area.spaces.active.image.name)
+            if not self.previous:
+                if number > len(bpy.data.images) - 2 :
+                    number = -1
+                context.area.spaces.active.image = bpy.data.images[number + 1]
+            else:
+                context.area.spaces.active.image = bpy.data.images[number - 1]
+        except:
+            pass
+        return {'FINISHED'}
+
+def register_MZkeymaps():
+    global MZ_keymaps
+    MZ_keymaps = []
+    new_keymap = bpy.context.window_manager.keyconfigs.addon.keymaps.new(name = "Image",space_type='IMAGE_EDITOR', region_type='WINDOW')
+    new_keymap_item = new_keymap.keymap_items.new("image.next", type = "RIGHT_BRACKET",alt=False, ctrl=False, shift=False, value = "PRESS")
+    new_keymap_item.properties.previous = False
+    MZ_keymaps.append(new_keymap)
+    
+    new_keymap = bpy.context.window_manager.keyconfigs.addon.keymaps.new(name = "Image", space_type='IMAGE_EDITOR', region_type='WINDOW')
+    new_keymap_item = new_keymap.keymap_items.new("image.next", type = "LEFT_BRACKET",alt=False, ctrl=False, shift=False, value = "PRESS")
+    new_keymap_item.properties.previous = True
+    MZ_keymaps.append(new_keymap)
+
+def unregister_MZkeymaps():
+    register_MZkeymaps()
+    for everykeymap in MZ_keymaps:
+        bpy.context.window_manager.keyconfigs.addon.keymaps.remove(everykeymap)
+        del MZ_keymaps[:]
+
+def register():
+    bpy.utils.register_class(NextImage)
+    register_MZkeymaps()
+
+def unregister():
+    unregister_MZkeymaps()
+    bpy.utils.unregister_class(NextImage)
+
+
+if __name__ == "__main__":
+    register()
+    #unregister()
+    # test call
+    #bpy.ops.object.simple_operator()
