@@ -1,12 +1,12 @@
 import bpy, os
 from mathutils import Vector
 
-folder = 'C:\\SplitRender\\'
+folder = 'C:\\'
 n = 3 
 
 bpy.context.scene.render.image_settings.file_format = 'PNG'
 bpy.context.scene.render.image_settings.color_mode = 'RGB'
-bpy.context.scene.view_settings.view_transform = 'Default'
+bpy.context.scene.view_settings.view_transform = 'Standard'
 bpy.context.scene.view_settings.look = 'None'
 def path_iterator(some_folder):
     for fp in os.listdir(some_folder):
