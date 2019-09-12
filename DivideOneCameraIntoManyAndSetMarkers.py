@@ -7,7 +7,7 @@ render = bpy.context.scene.render
 aspect = render.resolution_y / render.resolution_x
 
 data.lens = data.lens * n
-data.draw_size = data.draw_size / n
+data.display_size = data.display_size / n
 data.shift_x = data.shift_x * n - (n/2 - 0.5)
 data.shift_y = (data.shift_y/aspect * n - (n/2 - 0.5))*aspect
 marker = bpy.context.scene.timeline_markers.new('',  frame=bpy.context.scene.frame_current)
