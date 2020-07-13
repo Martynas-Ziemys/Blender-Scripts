@@ -3,12 +3,7 @@ import bmesh
 import random
 
 
-#################################################
-
-number = 40          #########   THE NUMBER   #########
-
-#################################################
-
+number = 40     
 
 previous = 0
 for object in bpy.context.selected_objects:
