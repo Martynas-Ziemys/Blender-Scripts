@@ -214,7 +214,7 @@ class MZMasksMenu(bpy.types.Menu):
         pie.operator('object.assign_mask', text = 'Assign Blue', icon = 'COLOR_BLUE').material='Masks.Blue'
         pie.operator('object.assign_mask', text = 'Assign Black').material='Masks.Black'
         pie.operator('object.assign_mask', text = 'Assign Mirror').material='Masks.Mirror'
-        pie.operator('scene.scene_for_masks', text = 'Setup/reset masks', icon = 'IMAGE_ALPHA')
+        pie.operator('scene.setup_masks', text = 'Setup/reset masks', icon = 'IMAGE_ALPHA')
         pie.operator('object.assign_mask', text = 'Resset Slot Order', icon = 'FILE_REFRESH').resset=True
         pie.operator('object.assign_mask', text = 'Assign Refractive').material='Masks.Refractive'
         
@@ -226,7 +226,7 @@ def registerKeymaps():
     wm = bpy.context.window_manager
     if wm.keyconfigs.addon:
         km = wm.keyconfigs.addon.keymaps.new(name='3D View Generic', space_type='VIEW_3D')
-        kmi = km.keymap_items.new('wm.call_menu_pie', 'BUTTON5MOUSE', 'PRESS', shift=False, alt=False,ctrl=False)
+        kmi = km.keymap_items.new('wm.call_menu_pie', 'MIDDLEMOUSE', 'PRESS', shift=True, alt=True,ctrl=True)
         kmi.properties.name = "scene.masks_menu"
         addon_keymaps.append((km, kmi))
 
