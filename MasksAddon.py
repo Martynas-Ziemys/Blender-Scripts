@@ -225,7 +225,7 @@ addon_keymaps = []
 def registerKeymaps():
     wm = bpy.context.window_manager
     if wm.keyconfigs.addon:
-        km = wm.keyconfigs.addon.keymaps.new(name='3D View Generic', space_type='VIEW_3D')
+        km = wm.keyconfigs.addon.keymaps.new(name='3D View', space_type='VIEW_3D')
         kmi = km.keymap_items.new('wm.call_menu_pie', 'MIDDLEMOUSE', 'PRESS', shift=True, alt=True,ctrl=True)
         kmi.properties.name = "scene.masks_menu"
         addon_keymaps.append((km, kmi))
