@@ -1,8 +1,8 @@
 bl_info = {
     "name": "Random Render Seed",
-    "author": "Martynas Ziemys",
+    "author": "Martynas Žiemys",
     "version": (1),
-    "blender": (2, 77, 0),
+    "blender": (3, 6, 1),
     "location": "CyclesRenderSettings",
     "description": "Random Render seed EVERY TIME before rendering",
     "warning": "",
