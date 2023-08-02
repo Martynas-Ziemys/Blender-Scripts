@@ -13,6 +13,8 @@ bl_info = {
 import bpy
 from bpy.types import Operator
 
+
+#No nice way to access the list form bpy API
 def get_custom_orientations():
     try:
         bpy.context.scene.transform_orientation_slots[0].type = ""
@@ -44,6 +46,7 @@ def register():
     
 def unregister():
     bpy.utils.unregister_class(SCENE_OT_remove_custom_orientations)
+
     
 if __name__ == "__main__":
     register()
