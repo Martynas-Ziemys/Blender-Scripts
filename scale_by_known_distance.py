@@ -12,7 +12,7 @@ bl_info = {
 }
 
 import bpy
-from bpy.props import FloatProperty
+from bpy.props import StringProperty
 from math import dist
 
 
@@ -21,16 +21,22 @@ class OBJECT_OT_known_distance(bpy.types.Operator):
     bl_idname = "object.scale_by_known_distance"
     bl_label = "Scale By Known Distance "
     bl_options = {'REGISTER', 'UNDO'}
-    l : FloatProperty(name = "Distance between vertices: ", default = 0)
+    bl_property = "u_input"
+    #bl_property needed to auto focus popup input must be a string unfortunately
+    u_input : StringProperty(name = "Distance between vertices: ", default = "0")
     distance = 0
-    
     @classmethod
     def poll(cls, context):
         return context.active_object.type == 'MESH'
 
     def execute(self, context):
+        try:
+            self.d = float(self.u_input)
+        except:
+            self.report({"WARNING"}, "Input float")
+            return {'CANCELLED'}            
         o = bpy.context.object
-        scale = self.l / self.distance 
+        scale = self.d / self.distance 
         bpy.ops.object.mode_set(mode = 'OBJECT')
         context.scene.tool_settings.transform_pivot_point = 'ACTIVE_ELEMENT'
         bpy.ops.transform.resize(value = (scale,scale,scale))
@@ -40,6 +46,7 @@ class OBJECT_OT_known_distance(bpy.types.Operator):
         return {'FINISHED'}
     
     def invoke(self, context, event):
+        self.d = float(self.u_input)
         o = bpy.context.object
         o.update_from_editmode()
         sel = [v for v in o.data.vertices if v.select]
@@ -47,8 +54,8 @@ class OBJECT_OT_known_distance(bpy.types.Operator):
             self.report({"WARNING"}, "Select 2 vertices!")
             return {'CANCELLED'}
         v1,v2 = sel
-        self.l = dist(o.matrix_world @ v1.co, o.matrix_world @ v2.co)
-        self.distance = self.l
+        self.d = dist(o.matrix_world @ v1.co, o.matrix_world @ v2.co)
+        self.distance = self.d
         return context.window_manager.invoke_props_dialog(self, width = 450)
 
         
